@@ -1,24 +1,24 @@
 # ACM Research Coding Challenge (Spring 2021)
 
-## No Collaboration Policy
+## Process
+Upon first reading the coding challenge, I was *completely* lost. I began by looking into what a GenBank file is, and from there I researched the other keywords in the problem. My first attempt to create a genome map would utilize rather obscure and difficult-to-install software, which I later realized was not the ideal way to go about the problem. Following that, I came across a Python library called Biopython. This was infinitely easier to use and implement, so I ended up using this to complete the coding challenge.
 
-**You may not collaborate with anyone on this challenge.** You _are_ allowed to use Internet documentation. If you _do_ use existing code (either from Github, Stack Overflow, or other sources), **please cite your sources in the README**.
+After a little bit more research, I found several thorough guides on how to use Biopython for particular purposes. Specifically, I used the GenomeDiagram module to create my final diagram. Creating a genome diagram from this point was rather simple. Before anything else, I read the gene sequence from Genome.gb into my program. From there, I began by creating an empty "diagram" object, followed by an empty track and empty feature set. These will be used to "house" the details of our particular gene sequence. Next, I created a loop that would go through the "features" of the gene sequence. Each feature labeled as a gene would be added to the feature set created earlier. Each gene would be assigned a color and formatted to look nice on the resulting diagram. 
 
-## Submission Procedure
+In addition to simply mapping the genes, I checked for common enzyme reception sites in the gene sequence. If a segment of the gene sequence was found to match that of the enzyme reception site, a thin line would pierce the diagram in a location that corresponds to where the reception site was located in the genome. In other words, it places a marker on the site of an area of interest on the genome, if one is found.
 
-Please follow the below instructions on how to submit your answers.
+Finally, the contents of the diagram is complete. All that is left to do is draw the diagram and display it as an image. I created the shape of the diagram using objects from reportlab. All of the features and genes that I wanted to display are saved within the GenomeDiagram object, so I did not have to display each gene individually. However, if I were to end the program here, the output would be a PDF file. As required by the challenge, I needed to make output this file as an image. I ran into one last predicament: when drawn by reportlab, the output was a PNG file. After a final brief round of research, I discovered that reportlab can be used with the Python Imaging Library (PIL) to display the output as a PNG image. To do this, I had to install one final library: Poppler. Reportlab created the PDF, Poppler modified this into a PNG image, and this PNG image was displayed by the final line of code.
 
-1. Create a **public** fork of this repo and name it `ACM-Research-Coding-Challenge-S21`. To fork this repo, click the button on the top right and click the "Fork" button.
-2. Clone the fork of the repo to your computer using `git clone [the URL of your clone]`. You may need to install Git for this (Google it).
-3. Complete the Challenge based on the instructions below.
-4. Submit your solution by filling out this [form](https://acmutd.typeform.com/to/uqAJNXUe).
+The final displayed output, "circle.png", is a simple map of the genome. The genes are organized in a circular pattern in alternating shades of pink and blue. They are imaged as an arrow instead of the standard box. This is because the direction of the arrow indicates the direction of the coding sequence (CDS). While it is a small detail, it is important to know the direction of the genetic code when analyzing genomes, so I thought it would be a nice feature to add in. The thin labeled lines mark where enzyme recognition sites occur in the genome. Finally, each feature is labeled appropriately and color coded.
 
-## Question One
+## Libraries Used
+- reportlab https://www.reportlab.com/opensource/
+- Biopython https://biopython.org/
+- Poppler https://pypi.org/project/python-poppler/
+- https://pillow.readthedocs.io/en/stable/
 
-Genome analysis is the identification of genomic features such as gene expression or DNA sequences in an individual's genetic makeup. A genbank file (.gb) format contains information about an individual's DNA sequence. The following dataset in `Genome.gb` contains a complete genome sequence of Tomato Curly Stunt Virus. 
-
-**With this file, create a circular genome map and output it as a JPG/PNG/JPEG format.** We're not looking for any complex maps, just be sure to highlight the features and their labels.
-
-**You may use any programming language you feel most comfortable. We recommend Python because it is the easiest to implement. You're allowed to use any library you want to implement this**, just document which ones you used in this README file. Try to complete this as soon as possible.
-
-Regardless if you can or cannot answer the question, provide a short explanation of how you got your solution or how you think it can be solved in your README.md file. However, we highly recommend giving the challenge a try, you just might learn something new!
+## Resources
+- http://biopython.org/DIST/docs/tutorial/Tutorial.html#sec346
+- https://biopython-cn.readthedocs.io/zh_CN/latest/en/chr17.html
+- https://biopython-tutorial.readthedocs.io/en/latest/notebooks/17%20-%20Graphics%20including%20GenomeDiagram.html
+- https://biopython.org/docs/1.75/api/Bio.SeqFeature.html
